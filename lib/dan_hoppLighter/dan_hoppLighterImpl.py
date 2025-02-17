@@ -4,6 +4,8 @@ import logging
 import os
 
 from installed_clients.KBaseReportClient import KBaseReport
+from installed_clients.readsutilsClient import ReadsUtils
+from .Utils.run_LighterUtils import run_lighter
 #END_HEADER
 
 
@@ -52,9 +54,27 @@ class dan_hoppLighter:
         # return variables are: output
         #BEGIN run_dan_hoppLighter
         logging.info('Running run_dan_hoppLighter with params=' + str(params))
+        logging.info('Downloading reads from ' + params['input_reads_ref'])
+
+        # These three lines allow it to download a reads-type file that would be in the narrative
+        ru = ReadsUtils(self.callback_url)
+        input_file_info = ru.download_reads({'read_libraries': [params['input_reads_ref']],
+                                             'interleaved': 'true'})['files'][params['input_reads_ref']]
+        logging.info('Downloaded reads from ' + str(input_file_info))
+
+        #Lighter
+        logging.info('Running Lighter')
+        # Note that the run_lighter function is writing the console output to a location specified by the output_file parameter, not by Lighter's -od parameter.
+        outputDirectory = os.path.join(self.shared_folder, 'Results')
+        outputFile = os.path.join(self.shared_folder, outputDirectory, 'index.html')
+        
+        returned_dict = run_lighter(input_file_info['files']['fwd'], outputFile, outputDirectory, params['kmer_length'], params['genome_size'], params['threads'])
+        logging.info('Returned dictionary: ' + str(returned_dict))
+
+
         report = KBaseReport(self.callback_url)
         report_info = report.create({'report': {'objects_created':[],
-                                                'text_message': params['parameter_1']},
+                                                'text_message': params['input_reads_ref']},
                                                 'workspace_name': params['workspace_name']})
         output = {
             'report_name': report_info['name'],
