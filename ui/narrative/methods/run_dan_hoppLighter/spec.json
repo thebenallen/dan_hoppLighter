@@ -11,9 +11,180 @@
     },
     "parameters": [ 
         {
-            "id": "parameter_1",
+            "id": "input_files",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": true,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ ]
+            }
+        },
+        {
+            "id": "output_file", 
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ ]
+            }
+        },
+        {
+            "id": "output_dir",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ ]
+            }
+        },
+        {
+            "id": "kmer_params",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ "-K" ],
+            "field_type": "dropdown",
+            "dropdown_options": {
+                "options": [{
+                    "display": "-K",
+                    "value": "-K"
+                }, {
+                    "display": "-k",
+                    "value": "-k"
+                }]
+            }
+        },
+        {
+            "id": "kmer_length",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ ]
+            }
+        },
+        {
+            "id": "genome_size",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ ]
+            }
+        },
+        {
+            "id": "alpha",
             "optional": true,
             "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ ]
+            }
+        },
+        {
+            "id": "threads",
+            "optional": true,
+            "advanced": true,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ ]
+            }
+        },
+        {
+            "id": "maxcor",
+            "optional": true,
+            "advanced": true,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ ]
+            }
+        },
+        {
+            "id": "trim",
+            "optional": true,
+            "advanced": true,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ ]
+            }
+        },
+        {
+            "id": "discard",
+            "optional": true,
+            "advanced": true,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ ]
+            }
+        },
+        {
+            "id": "noQual",
+            "optional": true,
+            "advanced": true,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ ]
+            }
+        },
+        {
+            "id": "newQual",
+            "optional": true,
+            "advanced": true,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ ]
+            }
+        },
+        {
+            "id": "saveTrustedKmers",
+            "optional": true,
+            "advanced": true,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ ]
+            }
+        },
+        {
+            "id": "loadTrustedKmers",
+            "optional": true,
+            "advanced": true,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "valid_ws_types": [ ]
+            }
+        },
+        {
+            "id": "zlib",
+            "optional": true,
+            "advanced": true,
             "allow_multiple": false,
             "default_values": [ "" ],
             "field_type": "text",
@@ -34,9 +205,70 @@
                 },{
                     "narrative_system_variable": "workspace_id",
                     "target_property": "workspace_id"
-                },{
-                    "input_parameter": "parameter_1",
-                    "target_property": "parameter_1"
+                },
+                {
+                    "input_parameter": "input_files",
+                    "target_property": "input_files"
+                },
+                {
+                    "input_parameter": "output_file",
+                    "target_property": "output_file"
+                },
+                {
+                    "input_parameter": "output_dir",
+                    "target_property": "output_dir"
+                },
+                {
+                    "input_parameter": "kmer_params",
+                    "target_property": "kmer_params"
+                },
+                {
+                    "input_parameter": "kmer_length",
+                    "target_property": "kmer_length"
+                },
+                {
+                    "input_parameter": "genome_size",
+                    "target_property": "genome_size"
+                },
+                {
+                    "input_parameter": "alpha",
+                    "target_property": "alpha"
+                },
+                {
+                    "input_parameter": "threads",
+                    "target_property": "threads"
+                },
+                {
+                    "input_parameter": "maxcor",
+                    "target_property": "maxcor"
+                },
+                {
+                    "input_parameter": "trim",
+                    "target_property": "trim"
+                },
+                {
+                    "input_parameter": "discard",
+                    "target_property": "discard"
+                },
+                {
+                    "input_parameter": "noQual",
+                    "target_property": "noQual"
+                },
+                {
+                    "input_parameter": "newQual",
+                    "target_property": "newQual"
+                },
+                {
+                    "input_parameter": "saveTrustedKmers",
+                    "target_property": "saveTrustedKmers"
+                },
+                {
+                    "input_parameter": "loadTrustedKmers",
+                    "target_property": "loadTrustedKmers"
+                },
+                {
+                    "input_parameter": "zlib",
+                    "target_property": "zlib"
                 }
             ],
             "output_mapping": [
@@ -46,6 +278,10 @@
                 },{
                     "service_method_output_path": [0,"report_ref"],
                     "target_property": "report_ref"
+                },
+                {
+                    "narrative_system_variable": "workspace",
+                    "target_property": "workspace_name"
                 }
             ]
         }

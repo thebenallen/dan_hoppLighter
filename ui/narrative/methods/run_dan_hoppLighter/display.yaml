@@ -24,13 +24,89 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    parameter_1 :
-        ui-name : |
-            First parameter
-        short-hint : |
-            The first parameter
-        long-hint  : |
-            The first parameter that needs to be entered to drive the method. This might be the first of many.
+
+    input_file : # Should be able to accept more than one file
+        ui-name : Sequence File
+        short-hint : The input file
+        long-hint : The input file that contains the data to be processed. The file can be fasta and fastq, and can be gzip'ed with extension *.gz. 
+            When the input file is *.gz, the corresponding output file will also be gzip'ed.
+
+    output_file : # Should be hard-coded in the run_LighterUtils.py call?
+        ui-name : Output File
+        short-hint : The output file
+        long-hint : The file where the output will be saved in HTML format.
+
+    output_dir : # Should be hard-coded in the run_LighterUtils.py call?
+        ui-name : Output Directory
+        short-hint : The output directory
+        long-hint : The directory where the output files will be saved.
+
+    kmer_params : # Selection will determine showing kmer_length, genome_size, and alpha, or just kmer_length and genome_size
+        ui-name : Parameter Flag
+        short-hint : Parameters flag
+        long-hint : The required parameters used for processing. Selection will determine using kmer length, genome size, and alpha, or just kmer length and genome size. 
+            When using "-K" instead of "-k", Lighter will go through the reads an extra pass to decide C. When using "-K", genome_size should be relatively accurate.
+
+    kmer_length :
+        ui-name : K-mer Length
+        short-hint : Length of k-mer
+        long-hint : The length of the k-mers to be used.
+
+    genome_size :
+        ui-name : Genome Size
+        short-hint : Size of the genome
+        long-hint : The estimated size of the genome. When using "-k" it does not need to be accurate, but it should be at least as large as the size of the sequenced genome. 
+            "-K" can also be less accurate, but it should be relatively close to the size of the sequenced genome.
+
+    alpha :
+        ui-name : Alpha
+        short-hint : The sampling rate
+        long-hint : The sampling rate used in the method. Decided by the user. A rule of thumb: alpha=(7/C), where C is the average coverage of the data set.
+
+    threads :
+        ui-name : Threads
+        short-hint : Number of threads
+        long-hint : The number of threads to be used for processing. Default is 10.
+
+    maxcor :
+        ui-name : Maxcor
+        short-hint : Maximum correction
+        long-hint : The maximum number of corrections within a 20bp window. Default is 4.
+
+    trim :
+        ui-name : Trim
+        short-hint : Allow trimming.
+        long-hint : Allow trimming. Default is false.
+
+    discard :
+        ui-name : Discard
+        short-hint : Discard unfixable reads
+        long-hint : Whether to discard the sequences. When discarding paired-end matching will be LOST. Default is false.
+
+    noQual :
+        ui-name : No Quality
+        short-hint : No quality socre
+        long-hint : Ignore the quality socre. Default is false.
+
+    newQual :
+        ui-name : New Quality
+        short-hint : New quality option
+        long-hint : ASCII quality score. Set the quality for the bases corrected to the specified score. Default is not used.
+
+    saveTrustedKmers :
+        ui-name : Save Trusted K-mers
+        short-hint : Save trusted k-mers file
+        long-hint : Save the trusted kmers to specified file then stop. Default is not used.
+
+    loadTrustedKmers :
+        ui-name : Load Trusted K-mers
+        short-hint : Load trusted k-mers file
+        long-hint : Directly get solid kmers from specified file. Default is not used.
+
+    zlib :
+        ui-name : Gzip
+        short-hint : Gzip compression
+        long-hint : Set the compression level(1-9) of gzip on the processed file(s). Default is not used.
 
 description : |
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed pulvinar efficitur felis, quis tincidunt sem congue at. Vivamus ornare feugiat faucibus. Fusce tincidunt mattis nunc, nec varius purus convallis quis. Nulla facilisi. In at magna dolor. Suspendisse sit amet felis at arcu auctor dapibus vitae pharetra dui. Nam semper mi quis tortor fermentum mollis. Donec a arcu pharetra, rutrum dolor vitae, rutrum mauris. Donec ornare fringilla sagittis. Nam laoreet est in elementum malesuada. Vestibulum id mi eget urna hendrerit feugiat. Donec et ultrices nulla. Phasellus diam eros, dapibus at tempus nec, semper vel ante.</p>
