@@ -61,7 +61,7 @@ parameters :
     alpha :
         ui-name : Alpha
         short-hint : The sampling rate
-        long-hint : The sampling rate used in the method. Decided by the user. A rule of thumb: alpha=(7/C), where C is the average coverage of the data set.
+        long-hint : The sampling rate used in the method. Decided by the user. A rule of thumb is alpha=(7/C), where C is the average coverage of the data set.
 
     threads :
         ui-name : Threads

@@ -68,7 +68,7 @@ class dan_hoppLighter:
         outputDirectory = os.path.join(self.shared_folder, 'Results')
         outputFile = os.path.join(self.shared_folder, outputDirectory, 'index.html')
         
-        returned_dict = run_lighter(input_file_info['files']['fwd'], outputFile, outputDirectory, params['kmer_length'], params['genome_size'], params['threads'])
+        returned_dict = run_lighter(input_file_info['files']['fwd'], outputFile, outputDirectory, params['kmer_params'], params['kmer_length'], params['genome_size'])
         logging.info('Returned dictionary: ' + str(returned_dict))
 
 
