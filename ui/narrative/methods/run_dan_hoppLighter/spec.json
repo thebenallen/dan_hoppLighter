@@ -11,7 +11,7 @@
     },
     "parameters": [ 
         {
-            "id": "input_file",
+            "id": "input_reads_ref",
             "optional": false,
             "advanced": false,
             "allow_multiple": true,
@@ -207,8 +207,8 @@
                     "target_property": "workspace_id"
                 },
                 {
-                    "input_parameter": "input_file",
-                    "target_property": "input_files"
+                    "input_parameter": "input_reads_ref",
+                    "target_property": "input_reads_ref"
                 },
                 {
                     "input_parameter": "output_file",

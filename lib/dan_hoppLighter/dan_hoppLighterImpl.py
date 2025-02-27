@@ -5,7 +5,9 @@ import os
 
 from installed_clients.KBaseReportClient import KBaseReport
 from installed_clients.readsutilsClient import ReadsUtils
-from .Utils.run_LighterUtils import run_lighter
+from .Utils.run_LighterUtils import run_lighter, upload_reads
+from .Utils.createHtmlReport import HTMLReportCreator
+
 #END_HEADER
 
 
@@ -65,21 +67,42 @@ class dan_hoppLighter:
         #Lighter
         logging.info('Running Lighter')
         # Note that the run_lighter function is writing the console output to a location specified by the output_file parameter, not by Lighter's -od parameter.
+        #TO-DO: Output file needs to be in a different directory than the report directory with index.html.
+        # "Results" are corrected files. "Reports" is, well, reports. Make a reportDirectory var. That gets passed into report_creator.create_html_report later on below.
         outputDirectory = os.path.join(self.shared_folder, 'Results')
         outputFile = os.path.join(self.shared_folder, outputDirectory, 'index.html')
         
-        returned_dict = run_lighter(input_file_info['files']['fwd'], outputFile, outputDirectory, params['kmer_params'], params['kmer_length'], params['genome_size'])
+        returned_dict = run_lighter(input_file_info['files']['fwd'], outputFile, outputDirectory, params['kmer_length'], params['genome_size']) # For later: params['kmer_params']
         logging.info('Returned dictionary: ' + str(returned_dict))
 
+        corrected_file_name = returned_dict['corrected_file_name']
+        corrected_file_path = returned_dict['corrected_file_path']
+        logging.info('Corrected file path: ' + corrected_file_path)
+        logging.info('Corrected file name: ' + corrected_file_name)
 
-        report = KBaseReport(self.callback_url)
-        report_info = report.create({'report': {'objects_created':[],
-                                                'text_message': params['input_reads_ref']},
-                                                'workspace_name': params['workspace_name']})
-        output = {
-            'report_name': report_info['name'],
-            'report_ref': report_info['ref'],
-        }
+        # To-do: Update the 2nd corrected_file parameter (which is the output object name) to be an input from the user.
+        new_reads_upa = upload_reads(self.callback_url, corrected_file_path, params['workspace_name'], corrected_file_name, params['input_reads_ref'])
+
+        objects_created = [{
+                'ref': new_reads_upa,
+                'description': 'Corrected reads library'
+            }]
+
+        # Create a report
+        report_creator = HTMLReportCreator(self.callback_url)
+        output = report_creator.create_html_report(outputDirectory, params['workspace_name'], objects_created)
+        logging.info ('HTML output report: ' + str(output))
+
+        # 1st iteration/default report:
+        # report = KBaseReport(self.callback_url)
+        # report_info = report.create({'report': {'objects_created':[],
+        #                                         'text_message': params['input_reads_ref']},
+        #                                         'workspace_name': params['workspace_name']})
+        # output = {
+        #     'report_name': report_info['name'],
+        #     'report_ref': report_info['ref'],
+        # }
+        # logging.info('Output object: ' + str(output))
         #END run_dan_hoppLighter
 
         # At some point might do deeper type checking...

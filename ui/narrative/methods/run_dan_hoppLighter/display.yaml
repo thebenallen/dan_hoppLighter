@@ -24,7 +24,7 @@ suggestions:
 # Configure the display and description of parameters
 #
 parameters :
-    input_file : # Should be able to accept more than one file
+    input_reads_ref : # Should be able to accept more than one file
         ui-name : Sequence File
         short-hint : The input file
         long-hint : The input file that contains the data to be processed. The file can be fasta and fastq, and can be gzip'ed with extension *.gz. 
