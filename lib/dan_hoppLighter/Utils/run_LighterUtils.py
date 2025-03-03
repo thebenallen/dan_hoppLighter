@@ -3,38 +3,38 @@ import os
 from installed_clients.readsutilsClient import ReadsUtils
 from installed_clients.DataFileUtilClient import DataFileUtil
 
-def run_lighter(input_file, output_file, output_dir, kmer_size, genome_size):
+def run_lighter(input_file, result_dir, report_file, kmer_size, genome_size, threads=10):
     try:
         # Construct the Lighter command with additional parameters
         command = [
             'lighter',
             '-r', input_file,
-            '-od', output_dir,
+            '-od', result_dir,
             '-K', str(kmer_size),
             str(genome_size),
-            '-t', '10'
+            '-t', str(threads)
         ]
         
         # Run the Lighter command and capture the output
         result = subprocess.run(command, capture_output=True, text=True, check=True)
         
         # Write the output to the specified HTML-formatted file
-        with open(output_file, 'w') as f:
+        with open(report_file, 'w') as f:
             f.write("<html><body><pre>")
             f.write(result.stderr)
             f.write("</pre></body></html>")
             
-        print(f"Lighter command executed successfully. Output saved to {output_file}\n")
+        print(f"Lighter command executed successfully. Output saved to {report_file}\n")
 
         # Get the file name's prefix to the left of the . from input_file. Ignore the path.
         prefix = input_file.split('/')[-1].split('.')[0]
         # extension = input_file.split('/')[-1].split('.')[1]
 
-        # Return in a dictionary two file names found in the output_dir folder: The first has a .html prefix and the second has '.cor.' in the name and its filename prefix is the same as the input file's prefix.
+        # Return in a dictionary two file names found in the result_dir folder: The first has a .html prefix and the second has '.cor.' in the name and its filename prefix is the same as the input file's prefix.
         return {
-            'console_output_file': output_file,
-            'corrected_file_path': output_dir + '/' + [f for f in os.listdir(output_dir) if prefix in f][0],
-            'corrected_file_name': [f for f in os.listdir(output_dir) if prefix in f][0]
+            # 'console_report_file': report_file, # No need to return - input parameter is not altered.
+            'corrected_file_path': result_dir + '/' + [f for f in os.listdir(result_dir) if prefix in f][0],
+            'corrected_file_name': [f for f in os.listdir(result_dir) if prefix in f][0]
         }
 
     except subprocess.CalledProcessError as e:
@@ -67,12 +67,12 @@ def upload_reads(callback_url, reads_file, ws_name, reads_obj_name, source_reads
 
 """
 # This will contain functions to run Lighter command line tool
-def run_lighter(input_files, output_file, output_dir, kmer_params, kmer_length, genome_size, alpha=None, threads=10, maxcor=4, trim=False, discard=False, noQual=False, newQual=None, saveTrustedKmers=None, loadTrustedKmers=None, zlib=None):
+def run_lighter(input_files, report_file, result_dir, kmer_params, kmer_length, genome_size, alpha=None, threads=10, maxcor=4, trim=False, discard=False, noQual=False, newQual=None, saveTrustedKmers=None, loadTrustedKmers=None, zlib=None):
     try:
         # Construct the Lighter command with additional parameters
         command = [
             'lighter',
-            '-od', output_dir,
+            '-od', result_dir,
             '-t', str(threads),
             '-maxcor', str(maxcor)
         ]
@@ -105,21 +105,21 @@ def run_lighter(input_files, output_file, output_dir, kmer_params, kmer_length, 
         result = subprocess.run(command, capture_output=True, text=True, check=True)
         
         # Write the output to the specified HTML-formatted file
-        with open(output_file, 'w') as f:
+        with open(report_file, 'w') as f:
             f.write("<html><body><pre>")
             f.write(result.stderr)
             f.write("</pre></body></html>")
             
-        print(f"Lighter command executed successfully. Output saved to {output_file}\n")
+        print(f"Lighter command executed successfully. Output saved to {report_file}\n")
 
         # Get the file name's prefixes to the left of the . from the input files. Ignore the path.
         prefixes = [input_file.split('/')[-1].split('.')[0] for input_file in input_files]
 
-        # Return in a dictionary two file names found in the output_dir folder: The first has a .html prefix and the second has '.cor.' in the name and its filename prefix is the same as the input file's prefix.
-        corrected_files = [output_dir + '/' + f for f in os.listdir(output_dir) if any(prefix in f for prefix in prefixes)]
+        # Return in a dictionary two file names found in the result_dir folder: The first has a .html prefix and the second has '.cor.' in the name and its filename prefix is the same as the input file's prefix.
+        corrected_files = [result_dir + '/' + f for f in os.listdir(result_dir) if any(prefix in f for prefix in prefixes)]
 
         return {
-            'console_output_file': output_file,
+            'console_report_file': report_file,
             'corrected_files': corrected_files
         }
 
