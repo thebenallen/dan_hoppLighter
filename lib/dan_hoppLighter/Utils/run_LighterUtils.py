@@ -18,6 +18,10 @@ def run_lighter(input_file, result_dir, report_file, kmer_size, genome_size, thr
         # Run the Lighter command and capture the output
         result = subprocess.run(command, capture_output=True, text=True, check=True)
         
+        # Create a directory for report_file if it doesn't exist
+        if not os.path.exists(os.path.dirname(report_file)):
+            os.makedirs(os.path.dirname(report_file))
+
         # Write the output to the specified HTML-formatted file
         with open(report_file, 'w') as f:
             f.write("<html><body><pre>")
