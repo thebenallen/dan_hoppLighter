@@ -64,7 +64,7 @@ class dan_hoppLighterTest(unittest.TestCase):
         # Check returned data with
         # self.assertEqual(ret[...], ...) or other unittest methods
         ret = self.serviceImpl.run_dan_hoppLighter(self.ctx, {'workspace_name': 'dan_hopp:narrative_1739564911283',
-                                                             'input_reads_ref': '75160/2/2',
+                                                             'input_reads_ref': '75160/19/1',
                                                              'kmer_params': '-K',
                                                              'kmer_length': '21',
                                                              'genome_size': '4000000'})

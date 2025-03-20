@@ -2,6 +2,7 @@
 #BEGIN_HEADER
 import logging
 import os
+import shutil
 
 from installed_clients.KBaseReportClient import KBaseReport
 from installed_clients.readsutilsClient import ReadsUtils
@@ -64,6 +65,8 @@ class dan_hoppLighter:
                                              'interleaved': 'true'})['files'][params['input_reads_ref']]
         logging.info('Downloaded reads from ' + str(input_file_info))
 
+        # 'fwd': '/kb/module/work/tmp/461665ae-f152-40f1-9c9c-55bf181a4d8b.single.fastq', 'fwd_name': 'rhodo.art.q50.SE.reads.fastq.gz', 'rev': None, 'rev_name': None, 'otype': 'single', 'type': 'single'}}
+
         #Lighter
         logging.info('Running Lighter')
         # Note that the run_lighter function is writing the console output to a location specified by the output_file parameter, not by Lighter's -od parameter.
@@ -73,7 +76,11 @@ class dan_hoppLighter:
         reportFile = os.path.join(self.shared_folder, reportDirectory, 'index.html')
         resultsDirectory = os.path.join(self.shared_folder, 'Results')
         
-        returned_dict = run_lighter(input_file_info['files']['fwd'], resultsDirectory, reportFile, params['kmer_length'], params['genome_size']) # For later: params['kmer_params']
+        # # Get the path from input_file_info['files']['fwd']
+        input_file_path = os.path.join(input_file_info['files']['fwd'])
+        logging.info('Input file path: ' + input_file_path)
+
+        returned_dict = run_lighter(input_file_path, resultsDirectory, reportFile, params['kmer_length'], params['genome_size'])
         logging.info('Returned dictionary: ' + str(returned_dict))
 
         corrected_file_name = returned_dict['corrected_file_name']
@@ -83,7 +90,16 @@ class dan_hoppLighter:
 
         # To-do: Update the 2nd corrected_file parameter (which is the output object name) to be an input from the user. (Would Lighter's intrinsic renaming suffice?
         # (Is there a way to get the actual input file name from the input_file_info dictionary?))
-        new_reads_upa = upload_reads(self.callback_url, corrected_file_path, params['workspace_name'], corrected_file_name, params['input_reads_ref'])
+        # single = 0, interleaved = 1
+
+        # if input_file_info['files']['type'] == 'single', isInterleaved = 0. Else if input_file_info['files']['type'] == 'interleaved' then isInterleaved = 1.
+        isInterleaved = 0 if input_file_info['files']['type'] == 'single' else 1 if input_file_info['files']['type'] == 'interleaved' else None
+
+        new_reads_upa = upload_reads(self.callback_url, corrected_file_path, params['workspace_name'], corrected_file_name, params['input_reads_ref'], isInterleaved)
+
+        # Delete the corrected_file_path and any files within it (upload_reads should have already uploaded the corrected file)
+        if os.path.exists(resultsDirectory):
+            shutil.rmtree(resultsDirectory)
 
         objects_created = [{
                 'ref': new_reads_upa,

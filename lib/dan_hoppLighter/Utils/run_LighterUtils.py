@@ -22,6 +22,10 @@ def run_lighter(input_file, result_dir, report_file, kmer_size, genome_size, thr
         if not os.path.exists(os.path.dirname(report_file)):
             os.makedirs(os.path.dirname(report_file))
 
+        # Create a directory for result_dir if it doesn't exist
+        if not os.path.exists(result_dir):
+            os.makedirs(result_dir)
+
         # Write the output to the specified HTML-formatted file
         with open(report_file, 'w') as f:
             f.write("<html><body><pre>")
@@ -45,7 +49,7 @@ def run_lighter(input_file, result_dir, report_file, kmer_size, genome_size, thr
         print(f"An error occurred while running Lighter: {e}")
 
 
-def upload_reads(callback_url, reads_file, ws_name, reads_obj_name, source_reads_upa):
+def upload_reads(callback_url, reads_file, ws_name, reads_obj_name, source_reads_upa, isInterleaved):
     """
     callback_url = as usual.
     reads_file = full path to the reads file to upload
@@ -61,7 +65,7 @@ def upload_reads(callback_url, reads_file, ws_name, reads_obj_name, source_reads
     ru = ReadsUtils(callback_url)
     new_reads_upa = ru.upload_reads({
         'fwd_file': reads_unpacked,
-        'interleaved': 1,
+        'interleaved': isInterleaved,
         'wsname': ws_name,
         'name': reads_obj_name,
         'source_reads_ref': source_reads_upa

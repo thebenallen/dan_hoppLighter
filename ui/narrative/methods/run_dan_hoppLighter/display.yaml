@@ -1,10 +1,10 @@
 #
 # define display information
 #
-name: Method Name Here
+name: Correct Reads With Lighter
 
 tooltip: |
-    Perform some kind of method
+    Correct Reads With Lighter
 
 screenshots: []
 
@@ -25,20 +25,10 @@ suggestions:
 #
 parameters :
     input_reads_ref : # Should be able to accept more than one file
-        ui-name : Sequence File
+        ui-name : Input Reads
         short-hint : The input file
         long-hint : The input file that contains the data to be processed. The file can be fasta and fastq, and can be gzip'ed with extension *.gz. 
             When the input file is *.gz, the corresponding output file will also be gzip'ed.
-
-    output_reads : # Should be hard-coded in the run_LighterUtils.py call?
-        ui-name : Output File
-        short-hint : The output file
-        long-hint : The file where the output will be saved in HTML format.
-
-    # output_dir : # Should be hard-coded in the run_LighterUtils.py call?
-    #     ui-name : Output Directory
-    #     short-hint : The output directory
-    #     long-hint : The directory where the output files will be saved.
 
     # kmer_params : # Selection will determine showing kmer_length, genome_size, and alpha, or just kmer_length and genome_size
     #     ui-name : Parameter Flag
