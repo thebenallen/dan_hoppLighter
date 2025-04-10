@@ -81,6 +81,10 @@
                     "target_type_transform": "resolved-ref"
                 },
                 {
+                    "input_parameter": "output_reads_name",
+                    "target_property": "output_reads_name"
+                },
+                {
                     "input_parameter": "kmer_length",
                     "target_property": "kmer_length"
                 },
