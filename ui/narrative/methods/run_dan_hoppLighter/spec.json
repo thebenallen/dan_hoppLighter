@@ -25,6 +25,21 @@
             }
         },
         {
+            "id": "output_reads_name",
+            "optional": false,
+            "advanced": false,
+            "allow_multiple": false,
+            "default_values": [ "" ],
+            "field_type": "text",
+            "text_options": {
+                "is_output_name": true,
+                "valid_ws_types": [
+                    "KBaseFile.PairedEndLibrary",
+                    "KBaseFile.SingleEndLibrary"
+                ]
+            }
+        },
+        {
             "id": "kmer_length",
             "optional": false,
             "advanced": false,

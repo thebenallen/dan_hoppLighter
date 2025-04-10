@@ -41,8 +41,8 @@ def run_lighter(input_file, result_dir, report_file, kmer_size, genome_size, thr
         # Return in a dictionary two file names found in the result_dir folder: The first has a .html prefix and the second has '.cor.' in the name and its filename prefix is the same as the input file's prefix.
         return {
             # 'console_report_file': report_file, # No need to return - input parameter is not altered.
-            'corrected_file_path': result_dir + '/' + [f for f in os.listdir(result_dir) if prefix in f][0],
-            'corrected_file_name': [f for f in os.listdir(result_dir) if prefix in f][0]
+            'corrected_file_path': result_dir + '/' + [f for f in os.listdir(result_dir) if prefix in f][0] #,
+            # 'corrected_file_name': [f for f in os.listdir(result_dir) if prefix in f][0]
         }
 
     except subprocess.CalledProcessError as e:
