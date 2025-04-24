@@ -4,10 +4,10 @@
         "dan_hopp"
     ],
     "contact": "",
-    "categories": ["active"],
+    "categories": ["active", "reads"],
     "widgets": {
         "input": null,
-        "output": null
+        "output": "no-display"
     },
     "parameters": [ 
         {
