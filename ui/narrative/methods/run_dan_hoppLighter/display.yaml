@@ -1,7 +1,7 @@
 #
 # define display information
 #
-name: Correct Reads with Lighter
+name: Correct Reads with Lighter - v1.1.2
 
 tooltip: |
     Correct errors in whole genome sequencing reads
