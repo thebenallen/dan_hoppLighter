@@ -61,3 +61,4 @@ jobs:
       run: |
         sh $GITHUB_WORKSPACE/kb_sdk_actions/bin/kb-sdk test
         bash <(curl -s https://codecov.io/bash)
+3
